@@ -40,10 +40,10 @@ describe('#Chat', function() {
       // inform other clients of new joined
       server.get('clients').forEach(function(client, i, array) {
         if (client.nickname !== nick)
-          client.socket.write(JSON.stringify({
+          client.socket.send({
             type: 'joined',
             nick: nick
-          }));
+          });
       });
     });
 
