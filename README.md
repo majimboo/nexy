@@ -1,4 +1,4 @@
-Nexy
+Nexy [![Build Status](https://travis-ci.org/majimboo/nexy.svg?branch=master)](https://travis-ci.org/majimboo/nexy)
 ====
 
 Nexy is a middleware based TCP framework for Node. Inspired by Sencha's connect. Written for Multiplayer Games.
@@ -9,59 +9,79 @@ Quickstart
 **Simple Chat Server**
 
     Nexy = require('nexy'),
-    app = Nexy();
+    app = Nexy.createServer();
 
-    // see details about messages types below
-    app.set('message type', 'json');
-    // see details about method key below
-    app.set('method key', 'type')
+    // see details about message keys below
+    app.set('msg:key', 'type');
 
-    app.use('roomchat', function(req, res) {
+    // connection pool
+    app.set('clients', []);
+
+    app.route('join', function(req, res) {
         var nik = req.params.nick;
-        var msg = req.params.message;
 
-        // do stuff
+        // add joining client to pool
+        app.get('clients').push({ nickname: nik, socket: res });
+
+        // tell all other connected clients that `nik` has joined
+        app.get('clients').forEach(function(client, i, array) {
+            if (client.nickname !== nik) {
+                client.socket.write({ type: 'joined', nick: nik });
+            }
+        });
     });
 
     app.listen(2101);
 
+**Simple Chat Client**
+
+    Nexy = require('nexy'),
+    app = Nexy.createClient();
+
+    // see details about message keys below
+    app.set('msg:key', 'type');
+
+    // first message to initialize communication
+    app.connect('2101', function(res) {
+        res.write({ type: 'join', nick: 'iAmMaj' });
+    });
+
+    app.route('joined', function(req, res) {
+        console.log(req.params.nick + ' has joined the chatroom');
+    });
+
 Configuration
 ----
 
-###Method Key
-
-Status: `Not Yet Implemented` | Default: `type`
+###Message Key
 
 This will let Nexy know how to route your requests. Unlike HTTP servers, TCP server doesn't know where to route your request unless you specify what type of data you are sending on the message itself.
 
-    app.set('message type', 'json');
-    app.set('method key', 'type');
+By default Nexy will expect the following payload:
 
-Will assume that the messages sent from the client is a similar format:
+    {  method: 'roomchat', nick: 'iAmMaj', message: 'secret'  }
 
-    {  type: 'roomchat', nick: 'iamNick', message: 'secret'  }
+If you set the `msg:key` to:
 
-The **method key** is `type: roomchat`.
+    app.set('msg:key', 'type');
 
-###Message Type
+Then Nexy will expect the following payload:
 
-Status: `Not Yet Implemented` | Default: `json` Options: `json | binary`
+    {  type: 'roomchat', nick: 'iAmMaj', message: 'secret'  }
 
-This will let Nexy what kind of data you are sending. You can choose between `json` and `binary`.
+If you set the `msg:key` to:
 
-    app.set('message type', 'binary');
+    app.set('msg:key', 'MyCustomType');
 
-Will assume that the data you sent from the client are in binary format:
+Then Nexy will expect the following payload:
 
-    < Buffer 0A 00 01 00 00 00 00 00 00 00 >
+    {  MyCustomType: 'roomchat', nick: 'iAmMaj', message: 'secret'  }
 
-Let us break down the example above:
 
 
 TODO
 ----
 
 - add nexy as a client
-- add message type support
-- add method key support
+- add more examples
 - update README
