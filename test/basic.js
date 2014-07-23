@@ -1,6 +1,7 @@
 var should = require('chai').should(),
   Nexy = require('../'),
-  net = require('net');
+  net = require('net'),
+  EventEmitter = require('events').EventEmitter;
 
 
 /**
@@ -10,6 +11,12 @@ var should = require('chai').should(),
 describe('#Nexy', function() {
   it('should be an exported Object', function(done) {
     Nexy.should.be.an('Object');
+
+    done();
+  });
+
+  it('should be an instance of EventEmitter', function(done) {
+    Nexy.createServer().should.be.an.instanceof(EventEmitter);
 
     done();
   });

@@ -1,7 +1,7 @@
 {
   "name": "nexy",
-  "version": "0.0.1",
-  "description": "Nexy is a middleware based TCP framework for Node",
+  "version": "0.0.2",
+  "description": "High performance game network framework",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -10,14 +10,17 @@
     "test": "./node_modules/mocha/bin/mocha"
   },
   "keywords": [
-    "Nexy",
+    "next",
     "games",
     "framework",
     "multiplayer",
     "mmog",
     "middleware",
     "tcp",
-    "network"
+    "network",
+    "library",
+    "rack",
+    "connect"
   ],
   "author": "Majid Arif Siddiqui <me@majidarif.com> (http://blog.majidarif.com/)",
   "repository": "majimboo/nexy",
