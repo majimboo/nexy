@@ -1,0 +1,28 @@
+{
+    "name": "nexy",
+    "version": "0.0.1",
+    "description": "Nexy is a middleware based TCP framework for Node",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha"
+    },
+    "keywords": [
+        "Nexy",
+        "games",
+        "framwork",
+        "multiplayer",
+        "mmog"
+    ],
+    "author": "Majid Arif Siddiqui <me@majidarif.com> (http://blog.majidarif.com/)",
+    "license": "MIT",
+    "dependencies": {
+        "debug": "^1.0.4"
+    },
+    "devDependencies": {
+        "chai": "^1.9.1",
+        "mocha": "^1.20.1"
+    }
+}
