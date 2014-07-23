@@ -6,6 +6,10 @@ Nexy is a middleware based TCP framework for Node. Inspired by Sencha's connect.
 Quickstart
 ----
 
+**Installation**
+
+    npm install nexy
+
 **Simple Chat Server**
 
     Nexy = require('nexy'),
@@ -18,16 +22,14 @@ Quickstart
     app.set('clients', []);
 
     app.route('join', function(req, res) {
-        var nik = req.params.nick;
+        var nick = req.params.nick;
 
         // add joining client to pool
-        app.get('clients').push({ nickname: nik, socket: res });
+        app.get('clients').push({ nickname: nick, socket: res });
 
-        // tell all other connected clients that `nik` has joined
+        // tell all other connected clients that `nick` has joined
         app.get('clients').forEach(function(client, i, array) {
-            if (client.nickname !== nik) {
-                client.socket.write({ type: 'joined', nick: nik });
-            }
+            client.socket.write({ type: 'joined', nick: nick });
         });
     });
 
@@ -42,7 +44,7 @@ Quickstart
     app.set('msg:key', 'type');
 
     // first message to initialize communication
-    app.connect('2101', function(res) {
+    app.connect(2101, function(res) {
         res.write({ type: 'join', nick: 'iAmMaj' });
     });
 
@@ -82,6 +84,7 @@ Then Nexy will expect the following payload:
 TODO
 ----
 
-- add nexy as a client
+- improve overall API
+- add more features
 - add more examples
 - update README

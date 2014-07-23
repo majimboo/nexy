@@ -8,8 +8,8 @@ var should = require('chai').should(),
  */
 
 describe('#Nexy', function() {
-  it('should be an exported function', function(done) {
-    Nexy.should.be.an('Function');
+  it('should be an exported Object', function(done) {
+    Nexy.should.be.an('Object');
 
     done();
   });
@@ -24,7 +24,7 @@ describe('#App', function() {
   var app, client, server;
 
   beforeEach(function() {
-    app = Nexy();
+    app = Nexy.createServer();
     server = app.listen(2101);
     client = net.connect(2101);
   });
