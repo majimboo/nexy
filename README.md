@@ -3,6 +3,8 @@ Nexy [![Build Status](https://travis-ci.org/majimboo/nexy.svg?branch=master)](ht
 
 Nexy is a middleware based TCP framework for Node. Inspired by Sencha's connect. Written for Multiplayer Games.
 
+> **Warning**: This is a work in progress. Please do not use yet.
+
 Quickstart
 ----
 

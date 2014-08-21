@@ -30,9 +30,9 @@ describe('#Nexy', function() {
 describe('#App', function() {
   var app, client, server;
 
-  beforeEach(function() {
+  beforeEach(function(done) {
     app = Nexy.createServer();
-    server = app.listen(2101);
+    server = app.listen(2101, done);
     client = net.connect(2101);
   });
 
@@ -44,12 +44,6 @@ describe('#App', function() {
     app.should.be.an('Object');
 
     done();
-  });
-
-  it('should listen', function(done) {
-    server.on('listening', function() {
-      done();
-    });
   });
 
   it('should accept connections', function(done) {

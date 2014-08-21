@@ -5,10 +5,10 @@ var should = require('chai').should(),
 describe('#Chat', function() {
   var client, client2, server;
 
-  before(function() {
+  before(function(done) {
     server = Nexy.createServer(2101);
     client = Nexy.createClient();
-    client2 = Nexy.createClient();
+    client2 = Nexy.createClient(done);
   });
 
   after(function() {
